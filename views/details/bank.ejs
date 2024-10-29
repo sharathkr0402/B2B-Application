@@ -1,0 +1,61 @@
+<style>
+  #profilediv {
+    margin: 20px;
+    padding: 0px 20px;
+    width: 600px;
+    position: relative;
+    transform: translate(55%);
+  }
+  #profilediv h3 {
+    text-align: center;
+  }
+  #profilediv td {
+    padding: 12px;
+  }
+  #navdiv {
+    display: flex;
+    padding-right: 20px;
+    justify-content: space-evenly;
+  }
+  #mdiv {
+    padding: 20px 20px 0px 20px;
+  }
+  #mmdiv {
+    background-color: antiquewhite;
+    margin: 20px 100px;
+    border-radius: 10px;
+    padding-bottom: 20px;
+  }
+</style>
+<% layout('layouts/boilerplate')%>
+<div id="mmdiv">
+  <div id="mdiv">
+    <div id="navdiv">
+      <a href="/profileDetails"
+        ><button class="btn btn-primary">Profile Details</button></a
+      >
+      <a href="/bank"><button class="btn btn-primary">Bank Details</button></a>
+      <a href="/kyc"><button class="btn btn-primary">KYC Details</button></a>
+    </div>
+  </div>
+  <hr />
+  <div id="profilediv">
+    <h3>Your Bank Details</h3>
+    <table class="table table-primary table-bordered border-primary">
+      <tbody>
+        <tr>
+          <td style="width: 250px">Bank Name</td>
+          <td><%=user.bankName%></td>
+        </tr>
+        <tr>
+          <td>Account Number</td>
+          <td><%=user.accountNo%></td>
+        </tr>
+        <tr>
+          <td>IFSC Code</td>
+          <td><%=user.ifscCode%></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,81 @@
+<style>
+  #profilediv {
+    margin: 20px;
+    padding: 0px 20px;
+    width: 650px;
+    position: relative;
+    transform: translate(50%);
+  }
+  #profilediv h3 {
+    text-align: center;
+  }
+  #profilediv td {
+    padding: 12px;
+  }
+  #navdiv {
+    display: flex;
+    padding-right: 20px;
+    justify-content: space-evenly;
+  }
+  #mdiv {
+    padding: 20px 20px 0px 20px;
+  }
+  #mmdiv {
+    background-color: antiquewhite;
+    margin: 20px 100px;
+    border-radius: 10px;
+    padding-bottom: 20px;
+  }
+</style>
+<% layout('layouts/boilerplate')%>
+<div id="mmdiv">
+  <div id="mdiv">
+    <div id="navdiv">
+      <a href="/profileDetails"
+        ><button class="btn btn-primary">Your Profile Details</button></a
+      >
+      <a href="/bank"><button class="btn btn-primary">Bank Details</button></a>
+      <a href="/kyc"><button class="btn btn-primary">KYC Details</button></a>
+    </div>
+  </div>
+  <hr />
+  <div id="profilediv">
+    <h3>Profile Details</h3>
+    <table class="table table-primary table-bordered border-primary">
+      <tbody>
+        <tr>
+          <td style="width: 150px">Role</td>
+          <td><%=user.role%></td>
+        </tr>
+        <tr>
+          <td>Name</td>
+          <td><%=user.name%></td>
+        </tr>
+        <tr>
+          <td>Email</td>
+          <td><%=user.email%></td>
+        </tr>
+        <tr>
+          <td>Mobile</td>
+          <td><%=user.mobile%></td>
+        </tr>
+        <tr>
+          <td>Address</td>
+          <td><%=user.address%></td>
+        </tr>
+        <tr>
+          <td>Wallet</td>
+          <td><b> &#8377; <%=user.wallet%></b></td>
+        </tr>
+        <tr>
+          <td>Join Date</td>
+          <td><%=user.date.slice(0,10)%></td>
+        </tr>
+        <tr>
+          <td>Expire Date</td>
+          <td><%=user.expire.slice(0,10)%></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,145 @@
+<style>
+  #addnewproduct .container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f5f5dc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  #addnewproduct h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  #addnewproduct .form-group {
+    margin-bottom: 15px;
+  }
+
+  #addnewproduct .form-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+  #addnewproduct .form-control,
+  #addnewproduct .form-control-file,
+  #addnewproduct .form-control textarea {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  #addnewproduct .form-control-file {
+    padding: 3px;
+  }
+
+  #addnewproduct .form-control:focus,
+  #addnewproduct .form-control-file:focus,
+  #addnewproduct .form-control textarea:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+
+  #addnewproduct .btn {
+    display: inline-block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  #addnewproduct .btn:hover {
+    background-color: #0056b3;
+  }
+
+  @media (max-width: 600px) {
+    #addnewproduct .container {
+      margin: 20px;
+      padding: 15px;
+    }
+
+    #addnewproduct .form-control,
+    #addnewproduct .form-control-file,
+    #addnewproduct .form-control textarea {
+      width: calc(100% - 16px);
+    }
+
+    #addnewproduct .btn {
+      padding: 8px;
+    }
+  }
+</style>
+<% layout('layouts/boilerplate') %>
+<div id="addnewproduct">
+  <div class="container">
+    <h1>Add New Product</h1>
+    <form action="/addnewproduct" method="post" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="name" class="form-label">Product Name</label>
+        <input
+          id="name"
+          class="form-control"
+          type="text"
+          name="name"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="image" class="form-label">Upload Product Image</label>
+        <input
+          id="image"
+          type="file"
+          name="image"
+          accept="image/*"
+          class="form-control-file"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="price" class="form-label">Product Price</label>
+        <input
+          id="price"
+          class="form-control"
+          type="number"
+          name="price"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="per" class="form-label">Product Per</label>
+        <input id="per" class="form-control" type="text" name="per" required />
+      </div>
+      <div class="form-group">
+        <label for="qty" class="form-label">Product Quantity</label>
+        <input
+          id="qty"
+          class="form-control"
+          type="number"
+          name="qty"
+          min="1"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="description" class="form-label">Product Description</label>
+        <textarea
+          id="description"
+          class="form-control"
+          name="description"
+          rows="3"
+          required
+        ></textarea>
+      </div>
+      <button type="submit" class="btn">Add Product</button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,175 @@
+<style>
+  .product-container {
+    padding: 20px;
+  }
+
+  .product-image {
+    height: 250px;
+    object-fit: cover;
+  }
+
+  .card {
+    border: none;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2) !important; /* Force shadow to apply */
+  }
+
+  .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.3) !important; /* Force shadow on hover */
+  }
+  .card-title {
+    font-weight: bold;
+    color: #333;
+  }
+
+  .card-text {
+    margin-bottom: 0.75rem;
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+  }
+  .flex-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .producttocart {
+    display: flex;
+    flex-direction: column;
+  }
+  /* Custom mobile styles for smaller devices */
+  @media (max-width: 576px) {
+    .product-image {
+      height: 200px; /* Reduce image height on mobile */
+    }
+
+    .card-body {
+      padding: 15px; /* Reduce padding for better fit */
+    }
+
+    .card-title {
+      font-size: 1.1rem; /* Adjust font size for mobile readability */
+    }
+
+    .card-text {
+      font-size: 0.9rem;
+    }
+  }
+</style>
+<% layout('layouts/boilerplate')%>
+<div class="product-container container my-2">
+  <h1 class="text-center mb-4">All Products</h1>
+  <div class="row">
+    <% products.forEach(function(prd, index) { %>
+    <!-- Create a new row for every third product -->
+    <% if (index % 3 === 0 && index !== 0) { %>
+  </div>
+  <div class="row">
+    <% } %>
+
+    <div class="col-12 col-sm-6 col-md-4 mb-4">
+      <div class="card h-100 shadow-sm">
+        <img
+          src="<%= prd.image %>"
+          alt="Product image"
+          class="card-img-top product-image"
+        />
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title text-center"><%= prd.name %></h5>
+          <p class="card-text">
+            <strong>Price:</strong> &#8377; <%= prd.price %> / <%=prd.per%>
+          </p>
+          <p class="card-text">Quantity Left: <%= prd.qty %> <%=prd.per%></p>
+          <form action="productdetails/<%= prd._id %>" class="mt-auto">
+            <button type="submit" class="btn btn-warning w-100">
+              View Details
+            </button>
+          </form>
+          <form action="/addtocart/<%=prd._id%>" class="mt-auto" method="post">
+            <div class="producttocart">
+              <div class="flex-row my-2">
+                <label for="rqty-<%= prd._id %>" class="form-label mb-0"
+                  >Quantity:</label
+                >
+                <button
+                  type="button"
+                  onclick="adjustQty('<%= prd._id %>', -1)"
+                  class="btn btn-secondary btn-sm"
+                >
+                  -
+                </button>
+
+                <input
+                  id="rqty-<%= prd._id %>"
+                  class="form-control text-center"
+                  type="number"
+                  name="rqty"
+                  value="1"
+                  min="1"
+                  max="<%= prd.qty %>"
+                  onchange="updateQty('<%= prd._id %>')"
+                  style="width: 100px"
+                />
+                <button
+                  type="button"
+                  onclick="adjustQty('<%= prd._id %>', 1)"
+                  class="btn btn-secondary btn-sm"
+                >
+                  +
+                </button>
+              </div>
+
+              <div>
+                <button type="submit" class="btn btn-primary w-100">
+                  <i class="fa-solid fa-cart-shopping"> </i> Add to Cart
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <% }); %>
+  </div>
+</div>
+<script>
+  // Increment and Decrement Quantity
+  async function adjustQty(productId, change) {
+    const qtyInput = document.getElementById("rqty-" + productId);
+    let newQty = parseInt(qtyInput.value) + change;
+    const maxQty = parseInt(qtyInput.max);
+    if (newQty >= 1 && newQty <= maxQty) {
+      qtyInput.value = newQty;
+      await updateQty(productId); // Update backend on each change
+    }
+  }
+
+  // Update Quantity in Backend
+  async function updateQty(productId) {
+    const rqty = document.getElementById("rqty-" + productId).value;
+    try {
+      const response = await fetch(`/editreqqty/${productId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ rqty }),
+      });
+      const result = await response.json();
+      if (response.ok) {
+        // Show success message
+      } else {
+        console.error("Update failed:", result.message);
+        alert("Failed to update quantity.");
+      }
+    } catch (error) {
+      console.error("Error updating quantity:", error);
+    }
+  }
+</script>

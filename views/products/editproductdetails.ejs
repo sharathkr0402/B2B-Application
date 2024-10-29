@@ -1,0 +1,162 @@
+<style>
+  /* Container styling */
+  #editproduct .container {
+    max-width: 700px;
+    padding: 20px;
+    background-color: #f5f5dc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+
+  /* Form Label */
+  .form-label {
+    font-weight: bold;
+    color: #333;
+  }
+
+  /* Form Control: Inputs, Textarea */
+  .form-control {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+  }
+
+  /* Button Styling */
+  .btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+  }
+
+  .btn:hover {
+    background-color: #0056b3;
+  }
+
+  /* Responsive Media Queries */
+  @media (max-width: 768px) {
+    #editproduct .container {
+      padding: 15px;
+    }
+
+    .form-control {
+      font-size: 14px;
+    }
+
+    .btn {
+      width: 100%;
+    }
+  }
+</style>
+<% layout('layouts/boilerplate') %>
+<div id="editproduct">
+  <div class="container">
+    <h1 class="text-center my-4">Edit Product Details</h1>
+    <form
+      action="/editproduct/<%=product._id%>"
+      method="post"
+      enctype="multipart/form-data"
+    >
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="name" class="form-label">Product Name</label>
+          <input
+            id="name"
+            class="form-control"
+            type="text"
+            value="<%=product.name%>"
+            name="name"
+            required
+          />
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="image" class="form-label">Upload Product Image</label>
+
+          <!-- Show current image if available -->
+          <% if (product.image) { %>
+          <div class="mb-2">
+            <img
+              src="/uploads/<%= product.image %>"
+              alt="Product Image"
+              class="img-thumbnail"
+              style="max-width: 150px"
+            />
+          </div>
+          <% } %>
+
+          <!-- Hidden input to retain the current image file -->
+          <input
+            type="hidden"
+            name="currentImage"
+            value="<%= product.image %>"
+          />
+
+          <!-- File input to upload new image -->
+          <input
+            id="image"
+            type="file"
+            name="image"
+            accept="image/*"
+            class="form-control"
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="price" class="form-label">Product Price</label>
+          <input
+            id="price"
+            class="form-control"
+            type="number"
+            name="price"
+            value="<%=product.price%>"
+            required
+          />
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="per" class="form-label">Product Per</label>
+          <input
+            id="per"
+            class="form-control"
+            type="text"
+            name="per"
+            value="<%=product.per%>"
+            required
+          />
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="qty" class="form-label">Product Quantity</label>
+        <input
+          id="qty"
+          class="form-control"
+          type="number"
+          name="qty"
+          value="<%=product.qty%>"
+          min="1"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">Product Description</label>
+        <textarea
+          id="description"
+          class="form-control"
+          name="description"
+          rows="3"
+          required
+        >
+      <%=product.description%></textarea
+        >
+      </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary">Update</button>
+      </div>
+    </form>
+  </div>
+</div>
